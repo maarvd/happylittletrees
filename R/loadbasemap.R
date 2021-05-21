@@ -26,7 +26,3 @@ loadbasemap <- function(sf, source, expand){
   }
   return(basemap)
 }
-
-
-
-
