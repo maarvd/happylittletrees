@@ -22,11 +22,37 @@ loadknmi <- function(from_date, to_date, stationID, params){
   #read URL
   knmi_table <- suppressMessages(readr::read_csv(URL, comment = "#", col_names = FALSE))
 
+  #retrieve columns
+    #read csv
+  colss <- suppressWarnings(suppressMessages(readr::read_csv(URL, col_names = FALSE)))
+    #change col name
+  colnames(colss) <- "kolom"
+    #create list to bind relevant lines to
+  collist <- list()
+  for(i in 1:nrow(colss)){
+    #loop through rows
+    tmp <- colss[i,]
+    #grepl patterns
+    if(grepl(pattern = "^#", tmp$kolom) == TRUE &
+       grepl(pattern = "DDVEC|FHVEC|FG|FHX|FHXH|FHN|FHNH|FXX|FXXH|TG|TN|TNH|TX|TXH|T10N|T10NH|SQ|SP|Q|DR|RH|RHX|RHXH|PG|PX|PXH|PN|PNH|VVN|VVNH|VVX|VVXH|NG|UG|UX|UXH|UN|UNH|EV24", tmp$kolom) == TRUE &
+       data.table::like(pattern = "LON(east)", tmp$kolom, fixed = TRUE) == FALSE){
+      collist[[i]] <- tmp
+    }
+  }
+    #bind list
+  collist <- do.call(rbind, collist)
+    #str_split, only keep relevant name
+  collist <- sapply(strsplit(collist$kolom,"  "), `[`, 1)
+    #tidy
+  collist <- gsub("# ", "", collist)
+    #remove STN (is always first)
+  collist <- collist[collist != "STN"]
+    #add STN and YYYYMMDD (always first)
+  collist <- c("STN", "YYYYMMDD", collist)
+
   #set col names
   if(ncol(knmi_table) == 41){
-    colnames(knmi_table) <- c("STN","YYYYMMDD","DDVEC","FHVEC","FG","FHX","FHXH","FHN","FHNH","FXX","FXXH","TG","TN","TNH","TX","TXH","T10N",
- "T10NH","SQ","SP","Q","DR","RH","RHX","RHXH","EV24","PG","PX","PXH","PN","PNH","VVN","VVNH","VVX","VVXH","NG",
- "UG","UX","UXH","UN","UNH")
+    colnames(knmi_table) <- collist
   } else{
     stop("Kolom aantal is niet gelijk aan 41")
   }
