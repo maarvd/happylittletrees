@@ -40,7 +40,7 @@ loadknmi <- function(from_date, to_date, stationID, params){
 
   #convert YYYMMDD to date
   data.table::setnames(knmi_table, old = "YYYYMMDD", new = "Datum")
-  knmi_table[, Datum := lubridate::ymd(Datum)]
+  knmi_table$Datum <- lubridate::ymd(knmi_table$Datum)
 
   #return
   return(knmi_table)
