@@ -3,11 +3,13 @@
 #' Retrieve areal basemaps using the bbox of an sf object
 #' @param sf Spatial feature object
 #' @param source either "google", "esri" or "osm" as a source of the basemap. Defaults to "google".
-#' @param expand Extension factor of the bounding box If 1, the bounding box is unchanged. Values smaller than 1 reduces the bounding box, and values larger than 1 enlarges the bounding box. Defaults to 1.2.
+#' @param expand Extension factor of the bounding box If 1, the bounding box is unchanged. Values smaller than 1 reduces the bounding box,
+#' and values larger than 1 enlarges the bounding box. Defaults to 1.2.
 #' @examples
 #' basemap <- loadbasemap(parcels, "google", 1.2)
+#'
 
-
+#' @export
 loadbasemap <- function(sf, source, expand){
   #set expand to 1.2 when missing
   if(missing(expand) == TRUE){
