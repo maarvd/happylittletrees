@@ -7,7 +7,7 @@
 #' @examples
 #' prec_table <- loadknmi("2001.01.10", "2002.01.10", 240, c("RH", "RHX"))
 
-
+#' @export
 loadknmi <- function(from_date, to_date, stationID, params){
   #set base URL
   baseURL <- "https://www.daggegevens.knmi.nl/klimatologie/daggegevens"
