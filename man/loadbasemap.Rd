@@ -9,12 +9,12 @@ loadbasemap(sf, source, expand)
 \arguments{
 \item{sf}{Spatial feature object}
 
-\item{source}{either "google" or "esri" as a source of the basemap. Defaults to "google".}
+\item{source}{either "google", "esri" or "osm" as a source of the basemap. Defaults to "google".}
 
 \item{expand}{Extension factor of the bounding box If 1, the bounding box is unchanged. Values smaller than 1 reduces the bounding box, and values larger than 1 enlarges the bounding box. Defaults to 1.2.}
 }
 \description{
-Load (and save to /dev) areal basemaps using the bbox of an sf object
+Retrieve areal basemaps using the bbox of an sf object
 }
 \examples{
 basemap <- loadbasemap(parcels, "google", 1.2)
