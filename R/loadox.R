@@ -7,6 +7,7 @@
 #' pox <- loadox("data/oxalate.csv")
 #'
 
+#' @export
 loadox <- function(file){
   dt <- data.table::fread(file)
 

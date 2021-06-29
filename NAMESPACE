@@ -3,3 +3,4 @@
 export(dist_knmi)
 export(loadbasemap)
 export(loadknmi)
+export(loadox)
