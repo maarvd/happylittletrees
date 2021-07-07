@@ -5,13 +5,13 @@
 #' @param dt data.table with soil data (topsoil only)
 #' @param loc #column distinguishing locations
 #' @param pal Column of P-AL (mg P2O5/100g)
-#' @param psd Column of PSDox (%)
+#' @param psd Column of PSDox (percentage)
 #' @param qmax  Column of Qmax (mmol/kg)
 #' @param pox Column of P-ox (mmol/kg)
-#' @param OS  Column of organic matter (%)
+#' @param OS  Column of organic matter (percentage)
 #' @param thickness Column specificying thickness of soil layer (cm)
 #' @param tpal P-AL target (mg P2O5/100g)
-#' @param tpsd PSDox target (%)
+#' @param tpsd PSDox target (percentage)
 #' @param extraction #Assumed P extraction by the crop (kg P2O5/ha/year)
 #'
 #' @examples

@@ -13,7 +13,7 @@ calc_phyto(dt, loc, pal, psd, qmax, pox, tpal, tpsd, extraction)
 
 \item{pal}{Column of P-AL (mg P2O5/100g)}
 
-\item{psd}{Column of PSDox (%)}
+\item{psd}{Column of PSDox (percentage)}
 
 \item{qmax}{Column of Qmax (mmol/kg)}
 
@@ -21,11 +21,11 @@ calc_phyto(dt, loc, pal, psd, qmax, pox, tpal, tpsd, extraction)
 
 \item{tpal}{P-AL target (mg P2O5/100g)}
 
-\item{tpsd}{PSDox target (%)}
+\item{tpsd}{PSDox target (percentage)}
 
 \item{extraction}{#Assumed P extraction by the crop (kg P2O5/ha/year)}
 
-\item{OS}{Column of organic matter (%)}
+\item{OS}{Column of organic matter (percentage)}
 
 \item{thickness}{Column specificying thickness of soil layer (cm)}
 }
