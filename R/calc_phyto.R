@@ -24,7 +24,7 @@
 
 calc_phyto <- function(dt, loc, pal, psd, qmax, pox, OS, thickness, tpal, tpsd, extraction){
   #copy data.table
-  dt <- data.table::copy(tmp)
+  dt <- data.table::copy(dt)
 
   #select rel columns
   relcols <- c(loc, pal, psd, qmax, pox, OS, thickness)
