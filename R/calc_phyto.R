@@ -21,8 +21,8 @@
 
 #' @export
 
-
 calc_phyto <- function(dt, loc, pal, psd, qmax, pox, OS, thickness, tpal, tpsd, extraction){
+
   #copy data.table
   dt <- data.table::copy(dt)
 
@@ -68,7 +68,7 @@ calc_phyto <- function(dt, loc, pal, psd, qmax, pox, OS, thickness, tpal, tpsd, 
   dt[, `kg soil/ha` := `m3/soil/ha` * `Dichtheid (kg/m3)`]
 
   #recalculate gewasonttrekking from kg P2O5/ha/jaar to kg P2O5/kg/jaar
-  dt[, `Delta Pox (kg P2O5/kg/jaar)` := Extraction / `kg soil/ha`]
+  dt[, `Delta Pox (kg P2O5/kg/jaar)` := extraction / `kg soil/ha`]
 
   #recalculate geasonttrekking to mg P/kg/jaar
   dt[, `Delta Pox (mg P/kg/jaar)` := `Delta Pox (kg P2O5/kg/jaar)` * (1/2.29) * 1000000]
