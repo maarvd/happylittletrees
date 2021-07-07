@@ -22,7 +22,7 @@
 #' @export
 
 
-calc_phyto <- function(dt, loc, pal, psd, qmax, pox, tpal, tpsd, extraction){
+calc_phyto <- function(dt, loc, pal, psd, qmax, pox, OS, thickness, tpal, tpsd, extraction){
   #copy data.table
   dt <- data.table::copy(tmp)
 

@@ -4,7 +4,7 @@
 \alias{calc_phyto}
 \title{Rough indication of required years of phyto-remediation}
 \usage{
-calc_phyto(dt, loc, pal, psd, qmax, pox, tpal, tpsd, extraction)
+calc_phyto(dt, loc, pal, psd, qmax, pox, OS, thickness, tpal, tpsd, extraction)
 }
 \arguments{
 \item{dt}{data.table with soil data (topsoil only)}
@@ -19,15 +19,15 @@ calc_phyto(dt, loc, pal, psd, qmax, pox, tpal, tpsd, extraction)
 
 \item{pox}{Column of P-ox (mmol/kg)}
 
+\item{OS}{Column of organic matter (percentage)}
+
+\item{thickness}{Column specificying thickness of soil layer (cm)}
+
 \item{tpal}{P-AL target (mg P2O5/100g)}
 
 \item{tpsd}{PSDox target (percentage)}
 
 \item{extraction}{#Assumed P extraction by the crop (kg P2O5/ha/year)}
-
-\item{OS}{Column of organic matter (percentage)}
-
-\item{thickness}{Column specificying thickness of soil layer (cm)}
 }
 \description{
 Calculate require years of phyto-remediation based on initial P-AL (empirical, roeghoorn) and PSDox in combination with Qmax (theoretical)
