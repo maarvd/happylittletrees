@@ -4,7 +4,7 @@
 \alias{loadbasemap}
 \title{Retrieve Aerial basemaps}
 \usage{
-loadbasemap(sf, source, expand)
+loadbasemap(sf, source, expand, zoom)
 }
 \arguments{
 \item{sf}{Spatial feature object}
@@ -13,11 +13,13 @@ loadbasemap(sf, source, expand)
 
 \item{expand}{Extension factor of the bounding box If 1, the bounding box is unchanged. Values smaller than 1 reduces the bounding box,
 and values larger than 1 enlarges the bounding box. Defaults to 1.2.}
+
+\item{zoom}{Zoom level (defaults to 18)}
 }
 \description{
 Retrieve areal basemaps using the bbox of an sf object
 }
 \examples{
-basemap <- loadbasemap(parcels, "google", 1.2)
+basemap <- loadbasemap(parcels, "google", 1.2, 18)
 
 }
