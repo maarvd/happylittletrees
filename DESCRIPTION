@@ -4,7 +4,7 @@ Title: Personal functions of Maarten
 Version: 0.1.0
 Author: Maarten van Doorn
 Maintainer: Maarten van Doorn <maarten.vandoorn@nmi-agro.nl>
-Description: Package to add functions to that I use alot
+Description: Package to standardise functions I apply alot
 License: Not applicable
 Encoding: UTF-8
 LazyData: true

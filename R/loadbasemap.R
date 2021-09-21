@@ -7,7 +7,7 @@
 #' and values larger than 1 enlarges the bounding box. Defaults to 1.2.
 #' @param zoom Zoom level (defaults to 18)
 #' @examples
-#' basemap <- loadbasemap(parcels, "google", 1.2, 18)
+#' basemap <- loadbasemap(parcels, "hybrid", 1.2, 18)
 #'
 
 #' @export
@@ -31,11 +31,11 @@ loadbasemap <- function(sf, source, expand, zoom){
   if(source == "hybrid"){
       basemap <- tmaptools::read_osm(sf, type = 'https://mt1.google.com/vt/lyrs=y&x={x}&y={y}&z={z}', zoom = zoom, ext = expand)
     } else if(source == "topo"){
-      basemap <- tmaptools::read_osm(sw, type = 'https://mt1.google.com/vt/lyrs=r&x={x}&y={y}&z={z}', zoom = zoom, ext = expand)
+      basemap <- tmaptools::read_osm(sf, type = 'https://mt1.google.com/vt/lyrs=r&x={x}&y={y}&z={z}', zoom = zoom, ext = expand)
     } else if(source == "topo.v2"){
       basemap <- tmaptools::read_osm(sf, type = 'http://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}.png', zoom = zoom, ext = expand)
     } else if(source == "aerial"){
-      basemap <- tmaptools::read_osm(sw, type = 'https://mt1.google.com/vt/lyrs=s&x={x}&y={y}&z={z}', zoom = zoom, ext = expand)
+      basemap <- tmaptools::read_osm(sf, type = 'https://mt1.google.com/vt/lyrs=s&x={x}&y={y}&z={z}', zoom = zoom, ext = expand)
     }
 
   #return

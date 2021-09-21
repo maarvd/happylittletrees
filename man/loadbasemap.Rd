@@ -20,6 +20,6 @@ and values larger than 1 enlarges the bounding box. Defaults to 1.2.}
 Retrieve areal basemaps using the bbox of an sf object
 }
 \examples{
-basemap <- loadbasemap(parcels, "google", 1.2, 18)
+basemap <- loadbasemap(parcels, "hybrid", 1.2, 18)
 
 }
