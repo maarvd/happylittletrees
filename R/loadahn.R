@@ -6,7 +6,8 @@
 #' @param type String stating which AHN data to select ("5m_dtm", "50cm_dtm" and "50cm_dsm") currently supported)
 #' @param savedir Directory to save rasters to
 #' @param tmpdir Optional: String stating a folder within dev which already exists where temporary AHN files can be downloaded to. Only relevant if type = "50cm_dtm".
-#'
+#' @importFrom httr parse_url build_url
+#' @importFrom ows4R WFSClient
 #'
 #' @examples
 #' ahn <- loadahn(sf = parcel, expand = 20, mask = TRUE, type = "50cm_dtm")
@@ -96,13 +97,36 @@ loadahn <- function(sf, expand, type, savedir, tmpdir){
       }
     }
 
-    #read bladnrs from PDOK
-    bladnrs <-
-      geojsonsf::geojson_sf(
-        "https://geodata.nationaalgeoregister.nl/ahn3/wfs?request=GetFeature&typename=ahn3:ahn3_bladindex&outputFormat=json",
-        input = st_crs(28992),
-        wkt = st_as_text(st_crs(28992))
-      ) |> suppressWarnings()
+    #read bladindex from pdok
+    #set WFS url gathered from rest SPI
+    wfs.url <- "https://service.pdok.nl/rws/ahn3/wfs/v1_0?"
+
+    #build a request for getcapacabilities
+    url <- httr::parse_url(wfs.url)
+    url$query <- list(service = "WFS",
+                      request = "GetCapabilities"
+    )
+    request <- httr::build_url(url)
+
+    #check which layers are present (version 2.0.0 seen in xml)
+    bwk_client <- ows4R::WFSClient$new(wfs.url,
+                                serviceVersion = "2.0.0")
+    bwk_names <- bwk_client$getFeatureTypes(pretty = TRUE)
+
+    #grepl bladindex
+    bwk_names <- bwk_names[grepl("bladindex", bwk_names)]$name
+
+    #retrieve layer 'peilgebied_vigerend'----
+    url <- httr::parse_url(wfs.url)
+    url$query <- list(service = "wfs",
+                      version = "2.0.0",
+                      request = "GetFeature",
+                      typename = bwk_names,
+                      srsName = "EPSG:28992"
+    )
+    request <- httr::build_url(url)
+
+    bladnrs <- read_sf(request)
 
     #transform crs aoi to crs bladnrs
     sf.buffered <- st_transform(sf.buffered, st_crs(bladnrs))
@@ -196,3 +220,5 @@ loadahn <- function(sf, expand, type, savedir, tmpdir){
   terra::writeRaster(raster.cropped, filename = paste0(savedir, "/", type, "_cropped.tiff"))
   terra::writeRaster(raster.masked, filename = paste0(savedir, "/", type, "_masked.tiff"))
 }
+
+

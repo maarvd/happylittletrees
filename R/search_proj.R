@@ -37,9 +37,9 @@ search_proj <- function(range, text){
 
     #remove some projectfolders if fill
     dirlist <-
-      dirlist[!grepl("Blgg|M M F|Intern|PZ|Standaard structuur", dirlist)]
+      dirlist[!grepl("Blgg|M M F|Intern|PZ|Standaard structuur", dirlist, ignore.case = TRUE)]
     dirlist2 <-
-      dirlist2[!grepl("Blgg|M M F|Intern|PZ|Standaard structuur", dirlist2)]
+      dirlist2[!grepl("Blgg|M M F|Intern|PZ|Standaard structuur", dirlist2, ignore.case =TRUE)]
 
     #loop through dirs, check for text
     dir.search <- lapply(
@@ -50,7 +50,7 @@ search_proj <- function(range, text){
 
         #only select files with text
         filelist <-
-          filelist[grepl(tolower(paste0(text, collapse = "|")), filelist)]
+          filelist[grepl(tolower(paste0(text, collapse = "|")), filelist, ignore.case = TRUE)]
 
         #return
         return(filelist)
@@ -68,8 +68,8 @@ search_proj <- function(range, text){
     projdirs.short <- list.dirs(paste0("C:/Users/", username, "/SPRINGG YAZILIM GELISTIRME TICARET LIMITED SIRKETI/NMISite - Documenten/Projecten"), recursive = FALSE, full.names = FALSE)
 
     #grepl rel
-    projdirs <- projdirs[!grepl("Blgg|Intern|M M F|PZ|Standaard structuur", projdirs)]
-    projdirs.short <- projdirs.short[!grepl("Blgg|Intern|M M F|PZ|Standaard structuur", projdirs.short)]
+    projdirs <- projdirs[!grepl("Blgg|Intern|M M F|PZ|Standaard structuur", projdirs, ignore.case = TRUE)]
+    projdirs.short <- projdirs.short[!grepl("Blgg|Intern|M M F|PZ|Standaard structuur", projdirs.short, ignore.case = TRUE)]
 
     #loop through projdirs
     rel.dirs <- lapply(1:length(projdirs), FUN = function(i){
@@ -83,7 +83,7 @@ search_proj <- function(range, text){
         filelist <- list.files(x, full.names = FALSE, recursive = TRUE) |> tolower()
 
         #grepl
-        filelist <- filelist[grepl(tolower(paste0(text, collapse = "|")), filelist)]
+        filelist <- filelist[grepl(tolower(paste0(text, collapse = "|"), ignore.case = TRUE), filelist)]
 
         #return
         return(filelist)
