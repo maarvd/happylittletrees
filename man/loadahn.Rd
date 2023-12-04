@@ -4,23 +4,17 @@
 \alias{loadahn}
 \title{Retrieve AHN height map}
 \usage{
-loadahn(sf, expand, type, savedir, tmpdir)
+loadahn(sf, expand)
 }
 \arguments{
-\item{sf}{Spatial feature polygon}
+\item{sf}{Spatial feature object}
 
 \item{expand}{Extension in meters}
-
-\item{type}{String stating which AHN data to select ("5m_dtm", "50cm_dtm" and "50cm_dsm") currently supported)}
-
-\item{savedir}{Directory to save rasters to}
-
-\item{tmpdir}{Optional: String stating a folder within dev which already exists where temporary AHN files can be downloaded to. Only relevant if type = "50cm_dtm".}
 }
 \description{
-Retrieve AHN3 height map (5m or 50cm resolution) for polygon of interest
+Retrieve AHN4 50cm dtm height map for area of interest
 }
 \examples{
-ahn <- loadahn(sf = parcel, expand = 20, mask = TRUE, type = "50cm_dtm")
+ahn <- loadahn(sf = parcel, expand = 20)
 
 }

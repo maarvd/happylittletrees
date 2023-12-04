@@ -83,7 +83,7 @@ search_proj <- function(range, text){
         filelist <- list.files(x, full.names = FALSE, recursive = TRUE) |> tolower()
 
         #grepl
-        filelist <- filelist[grepl(tolower(paste0(text, collapse = "|"), ignore.case = TRUE), filelist)]
+        filelist <- filelist[grepl(tolower(paste0(text, collapse = "|")), filelist, ignore.case = TRUE)]
 
         #return
         return(filelist)
