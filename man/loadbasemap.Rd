@@ -2,24 +2,24 @@
 % Please edit documentation in R/loadbasemap.R
 \name{loadbasemap}
 \alias{loadbasemap}
-\title{Retrieve basemaps}
+\title{Retrieve RGB basemaps from PDOK}
 \usage{
-loadbasemap(sf, source, expand, zoom)
+loadbasemap(sf, year, res, expand, zoom)
 }
 \arguments{
 \item{sf}{Spatial feature object}
 
-\item{source}{either "hybrid", "aerial", "topo" or "topo.v2 as a source of the basemap. Defaults to "hybrid".}
+\item{year}{2016 - 2023 supported. Defaults to most actual year.}
 
-\item{expand}{Extension factor of the bounding box If 1, the bounding box is unchanged. Values smaller than 1 reduces the bounding box,
-and values larger than 1 enlarges the bounding box. Defaults to 1.2.}
+\item{res}{Spatial resolution (high or low). Defaults to high (8cm) for 2021-2023, low (25cm) for 2016-2021.}
 
-\item{zoom}{Zoom level (defaults to 18)}
+\item{expand}{Extension in meters. Defaults to 20 meters.}
+
+\item{zoom}{Zoom level. Defaults to 13}
 }
 \description{
 Retrieve areal basemaps using the bbox of an sf object
 }
 \examples{
-basemap <- loadbasemap(parcels, "hybrid", 1.2, 18)
-ggplot() + ggspatial::layer_spatial(basemap)
+basemap <- loadbasemap(sf = parcels, year = 2023, res = 'high', expand = 20, zoom = 16)
 }
