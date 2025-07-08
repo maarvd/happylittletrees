@@ -146,7 +146,7 @@ loadbasemap <- function(sf, year, res, expand, zoom){
   httr::GET(wms_url, write_disk(paste0("dev/", temporary_name_valid)))  |> suppressMessages() |> invisible()
 
   #read
-  basemap <- rast(paste0("dev/", temporary_name_valid)) |> suppressWarnings() #extent will be set
+  basemap <- rast(paste0("dev/", temporary_name_valid), noflip = TRUE) |> suppressWarnings() #extent will be set
 
   #read extent
   ext(basemap) <- c(xmin, xmax, ymin, ymax)
