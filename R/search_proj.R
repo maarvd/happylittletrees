@@ -23,7 +23,7 @@ search_proj <- function(range, text){
       paste0(
         "C:/Users/",
         username,
-        "/SPRINGG YAZILIM GELISTIRME TICARET LIMITED SIRKETI/NMISite - Documenten/Projecten/",
+        "/NMI/NMI - Gedeelde documenten/Projecten/",
         range_tidied
       )
 
@@ -64,8 +64,8 @@ search_proj <- function(range, text){
     rel.dirs <- Filter(function(x) length(x) > 0, dir.search)
   } else if(range == "full"){
     #list all directories
-    projdirs <- list.dirs(paste0("C:/Users/", username, "/SPRINGG YAZILIM GELISTIRME TICARET LIMITED SIRKETI/NMISite - Documenten/Projecten"), recursive = FALSE)
-    projdirs.short <- list.dirs(paste0("C:/Users/", username, "/SPRINGG YAZILIM GELISTIRME TICARET LIMITED SIRKETI/NMISite - Documenten/Projecten"), recursive = FALSE, full.names = FALSE)
+    projdirs <- list.dirs(paste0("C:/Users/", username, "/NMI/NMI - Gedeelde documenten/Projecten"), recursive = FALSE)
+    projdirs.short <- list.dirs(paste0("C:/Users/", username, "/NMI/NMI - Gedeelde documenten/Projecten"), recursive = FALSE, full.names = FALSE)
 
     #grepl rel
     projdirs <- projdirs[!grepl("Blgg|Intern|M M F|PZ|Standaard structuur", projdirs, ignore.case = TRUE)]

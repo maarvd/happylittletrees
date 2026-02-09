@@ -103,7 +103,7 @@ loadwaterkwaliteit <- function(sf, expand){
 
   #portaal
   username <- Sys.info()[["user"]]
-  portaaldir <- paste0("C:/Users/", username,  "/SPRINGG YAZILIM GELISTIRME TICARET LIMITED SIRKETI/Sven Verweij - NMI-DATA/waterkwaliteit/Waterkwaliteitsportaal_v2/output/meetgegevens/oppervlaktewater/")
+  portaaldir <- paste0("C:/Users/", username,  "/NMI/Sven Verweij - Data-waterkwaliteit/Waterkwaliteitsportaal_v2/output/meetgegevens/oppervlaktewater/")
   filelist <-  list.files(portaaldir,full.names = TRUE)
 
   #rel gebieden

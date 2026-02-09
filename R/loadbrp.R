@@ -27,25 +27,19 @@ loadbrp <- function(sf, expand, year) {
 
   #find the sven directory
   dirlist <- list.dirs(paste0("C:/Users/", Sys.info()[["user"]]), recursive = FALSE)
-  dirlist <- dirlist[grepl("SPRINGG", dirlist)]
+  dirlist <- dirlist[grepl("NMI$", dirlist)]
   dirlist <- dirlist[!grepl("OneDrive", dirlist)]
-  rel_dir <- dirlist[lapply(
-    dirlist,
-    FUN =  function(x) {
-      tmp <- list.dirs(x, recursive = FALSE)
-      tmp <- grepl("Sven", tmp)
-      tmp <- any(tmp == TRUE)
-      return(tmp)
-    }
-  ) |> unlist()]
-  rel_dir <- paste0(rel_dir,
-                    "/Sven Verweij - NMI-DATA/landgebruik/brp/products/")
+  if(length(dirlist) != 1){
+    stop("dirlist != 1. Check script.")
+  } else{
+      rel_dir <- paste0(dirlist, "/Sven Verweij - Data-landgebruik/brp/products/")
+  }
 
   #list the BPR products
   brplist <- list.files(rel_dir, full.names = TRUE, pattern = ".gpkg$")
 
   #omit duplicates and DESKTOP
-  brplist <- brplist[!grepl("DESKTOP|LAPTOP|2020_concept|2021_concept|2022_concept",
+  brplist <- brplist[!grepl("DESKTOP|LAPTOP|2020_concept|2021_concept|2022_concept|2023_concept|2024_concept",
                             brplist)]
 
   #grepl the relevant year

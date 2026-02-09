@@ -30,12 +30,12 @@ loadbasemap <- function(sf, year, res, expand, zoom){
 
   #if year <2016, stop
   if(year <2016){
-    stop("Only  years 2016-2023 supported")
+    stop("Only  years 2016-2025 supported")
   }
 
   #when res is missing, set to high when year is 2021-2023 or actueel, else to low
   if(missing(res) == TRUE){
-    if(year %in% c(2021:2023, "Actueel")){
+    if(year %in% c(2021:2025, "Actueel")){
       res <- "high"
       print("res missing. Set to high (available for specified year)")
     } else{
