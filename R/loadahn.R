@@ -2,6 +2,7 @@
 #'
 #' Retrieve AHN4 50cm dtm height map for area of interest
 #' @param sf Spatial feature object
+#' @param product AHN product, default is dtm_05m
 #' @param expand Extension in meters
 #' @importFrom sf st_read st_buffer st_transform st_bbox st_crs
 #' @importFrom terra rast
@@ -10,11 +11,18 @@
 #' ahn <- loadahn(sf = parcel, expand = 20)
 #'
 #' @export
-loadahn <- function(sf, expand){
+loadahn <- function(sf, product, expand){
   #set expand to 0, mask to FALSE and type to 50cm_dtm when missing
   if (missing(expand) == TRUE) {
     expand <- 0
     print("Expand missing. Set to 0.")
+  }
+  if(missing(product) == TRUE){
+    product <- "dtm_05m"
+    print("Product missing. Set to dtm_05m.")
+  }
+  if(!product %in% c("dtm_05m", "dsm_05m")){
+    stop("Product must be either dtm_05m or dsm_05m.")
   }
 
   #transform to 28992
@@ -31,7 +39,7 @@ loadahn <- function(sf, expand){
   wcs_path <- "https://service.pdok.nl/rws/ahn/wcs/v1_0?SERVICE=WCS"
   wcs_request <- "REQUEST=GetCoverage"
   version <- "VERSION=2.0.1"
-  coverageid = "COVERAGEID=dtm_05m"
+  coverageid = paste0("COVERAGEID=", product)
   maxsize = "MAXSIZE=10000"
   format <- "FORMAT=image/tiff"
 
@@ -55,10 +63,14 @@ loadahn <- function(sf, expand){
   ahn4 <- rast(wcs)
 
   #set names
-  names(ahn4) <- "ahn4_50cm_dtm"
+  if(product == "dtm_05m"){
+    names(ahn4) <- "ahn4_50cm_dtm"
+  } else if(product == "dsm_05m"){
+    names(ahn4) <- "ahn4_50cm_dsm"
+  }
+
 
   #return
   return(ahn4)
 }
-
 

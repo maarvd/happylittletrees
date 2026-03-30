@@ -4,10 +4,12 @@
 \alias{loadahn}
 \title{Retrieve AHN height map}
 \usage{
-loadahn(sf, expand)
+loadahn(sf, product, expand)
 }
 \arguments{
 \item{sf}{Spatial feature object}
+
+\item{product}{AHN product, default is dtm_05m}
 
 \item{expand}{Extension in meters}
 }
