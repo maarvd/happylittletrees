@@ -1,8 +1,8 @@
 #' Retrieve AHN height map
 #'
-#' Retrieve AHN4 50cm dtm height map for area of interest
+#' Retrieve AHN4 DEM for area of interest
 #' @param sf Spatial feature object
-#' @param product AHN product, default is dtm_05m
+#' @param product AHN product ("dtm_05m", "dsm_05m", "dtm_5m", "dsm_5m")
 #' @param expand Extension in meters
 #' @importFrom sf st_read st_buffer st_transform st_bbox st_crs
 #' @importFrom terra rast
