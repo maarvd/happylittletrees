@@ -4,8 +4,9 @@
 #' @param sf Spatial feature polygon
 #' @param expand Extension in meters
 #'
-#' @importFrom sf st_read st_buffer st_transform st_bbox st_crs st_cast
-#' @importFrom data.table setnames
+#' @importFrom sf st_read st_buffer st_transform st_bbox st_crs st_cast st_crop st_as_sfc st_as_text
+#' @importFrom data.table setnames as.data.table
+#' @importFrom readxl read_xlsx
 #'
 #' @examples
 #' bofek <- loadbofek2020(sf = parcel, expand = 20)
@@ -17,62 +18,62 @@ loadbofek2020 <- function(sf, expand) {
   sf <- st_transform(sf, crs = st_crs(28992))
   sf_buffered <- st_buffer(sf, expand)
 
-  #wfs capabilities
-  wfs_capabilities <-
-    "https://bodemdata.nl/geoserver/bodem/wfs?SERVICE=WFS&VERSION=1.3.0&REQUEST=GetCapabilities"
-  #browseURL(wfs_capabilities)
+  #check for NMI-DATA env
+  nmi_data <- Sys.getenv("NMI-DATA")
+  if(nmi_data == ""){
+    stop("set NMI-DATA environment variable")
+  }
 
-  #set path and variable of interest
-  wfs_path <- "https://bodemdata.nl/geoserver/bodem/wfs?"
-  wfs_name <- "name=bodem:BOFEK_2020"
-  wfs_service <- "SERVICE=WFS"
-  wfs_version <- "VERSION=1.3"
-  wfs_request <- "REQUEST=GetFeature"
-  wfs_format <- "outputFormat=GML2"
-  wfs_typename <- "typeName=bodem:BOFEK_2020"
+  #create path to BOFEK .gdb
+  bofek_gdb <- paste0(nmi_data, "bodem/alterra/BOFEK2020/raw/GIS/BOFEK2020_bestanden/BOFEK2020.gdb")
+  if(!file.exists(bofek_gdb)){
+    stop("BOFEK2020 geodatabase not found")
+  }
 
-  #set bbox
-  xmin <- st_bbox(sf_buffered)[1] |> round(0)
-  xmax <- st_bbox(sf_buffered)[3] |> round(0)
-  ymin <- st_bbox(sf_buffered)[2] |> round(0)
-  ymax <- st_bbox(sf_buffered)[4] |> round(0)
-  wfs_bbox <- paste0("bbox=", xmin, ",", ymin, ",",  xmax, ",", ymax)
+  #read using a wkt filter
+  wktfilter <- st_bbox(sf_buffered) |> st_as_sfc() |> st_as_text()
+  bofek <- st_read(bofek_gdb, wkt_filter = wktfilter)
 
-  #create path
-  wfs <- paste(
-    wfs_path,
-    wfs_name,
-    wfs_service,
-    wfs_version,
-    wfs_request,
-    wfs_format,
-    wfs_bbox,
-    wfs_typename,
-    sep = "&"
-  )
-
-  #read as sf object
-  soil <- st_read(wfs, quiet = TRUE)
-
-  #to single polygons
-  soil <- st_cast(soil, 'POLYGON') |> suppressWarnings()
+  #set geometry
+  bofek <- st_set_geometry(bofek, 'geom')
 
   #crop
-  soil <- st_crop(soil, st_bbox(sf_buffered)) |> suppressWarnings()
+  bofek <- st_crop(bofek, sf_buffered) |> suppressWarnings()
 
-  #tidy
-  soil <- st_set_geometry(soil, 'geom')
-  soil$gml_id <- NULL
-  soil$OBJECTID_1 <- NULL
-  soil$SHAPE_AREA <- NULL
-  soil$SHAPE_LENG <- NULL
+  #to single polygons
+  bofek <- st_cast(bofek, 'POLYGON') |> suppressWarnings()
+
+  #crop
+  bofek <- st_crop(bofek, st_bbox(sf_buffered)) |> suppressWarnings()
+
+  #tidy columns
+  bofek$Shape_Length <- NULL
+  bofek$Shape_Area <- NULL
   data.table::setnames(
-    soil,
-    old = c("BOFEK2020", "OMSCHR"),
-    new = c("bofek2020_cluster", "bofek2020_omschrijving")
+    bofek,
+    old = c("BOFEK2020"),
+    new = c("bofek2020_cluster")
   )
 
-  #return
-  return(soil)
+  #read tabel met omschrijvingen
+  omschrijving_file <- paste0(nmi_data, "bodem/alterra/BOFEK2020/raw/GIS/BOFEK2020_bestanden/tabellen/Clusterhoofden.xlsx")
+  if(!file.exists(omschrijving_file)){
+    stop("Tabel met omschrijvingen niet gevonden op dataschijf")
+  }
+  omschrijving <- readxl::read_xlsx(omschrijving_file) |> data.table::as.data.table()
 
+  #tidy
+  omschrijving <- omschrijving[, c("clust1", "Omschrijving cluster")]
+  omschrijving <- omschrijving[!is.na(clust1)]
+  if(any(duplicated(omschrijving$clust1)) == TRUE){
+    stop("Duplicates in omschrijvingen van BOFEK clusters")
+  }
+  data.table::setnames(omschrijving, old = c("clust1", "Omschrijving cluster"),
+           new = c("bofek2020_cluster", "bofek2020_omschrijving"))
+
+  #join
+  bofek <- merge(bofek, omschrijving, by = 'bofek2020_cluster', all.x = TRUE)
+
+  #return
+  return(bofek)
 }

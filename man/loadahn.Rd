@@ -9,12 +9,12 @@ loadahn(sf, product, expand)
 \arguments{
 \item{sf}{Spatial feature object}
 
-\item{product}{AHN product, default is dtm_05m}
+\item{product}{AHN product ("dtm_05m", "dsm_05m", "dtm_5m", "dsm_5m")}
 
 \item{expand}{Extension in meters}
 }
 \description{
-Retrieve AHN4 50cm dtm height map for area of interest
+Retrieve AHN4 DEM for area of interest
 }
 \examples{
 ahn <- loadahn(sf = parcel, expand = 20)
