@@ -8,35 +8,44 @@ export(loadbofek2020)
 export(loadbrp)
 export(loadgrondwatertrap)
 export(loadkadaster)
+export(loadlbk)
 export(loadwaterkwaliteit)
 export(search_proj)
 export(set_folderstructure)
 import(data.table)
 import(ggplot2)
 import(ggtern)
-importFrom(data.table,as.data.table)
-importFrom(data.table,setnames)
+importFrom(data.table,
+  as.data.table,
+  setnames
+)
 importFrom(dplyr,group_by)
-importFrom(httr,GET)
-importFrom(httr,write_disk)
+importFrom(httr,
+  GET,
+  write_disk
+)
 importFrom(janitor,remove_empty)
 importFrom(plyr,ddply)
 importFrom(readxl,read_xlsx)
-importFrom(sf,st_as_sf)
-importFrom(sf,st_as_sfc)
-importFrom(sf,st_as_text)
-importFrom(sf,st_bbox)
-importFrom(sf,st_buffer)
-importFrom(sf,st_cast)
-importFrom(sf,st_crop)
-importFrom(sf,st_crs)
-importFrom(sf,st_intersects)
-importFrom(sf,st_read)
-importFrom(sf,st_set_geometry)
-importFrom(sf,st_transform)
-importFrom(terra,crs)
-importFrom(terra,ext)
-importFrom(terra,rast)
-importFrom(terra,rasterize)
-importFrom(terra,res)
+importFrom(sf,
+  st_as_sf,
+  st_as_sfc,
+  st_as_text,
+  st_bbox,
+  st_buffer,
+  st_cast,
+  st_crop,
+  st_crs,
+  st_intersects,
+  st_read,
+  st_set_geometry,
+  st_transform
+)
+importFrom(terra,
+  crs,
+  ext,
+  rast,
+  rasterize,
+  res
+)
 importFrom(tidyr,pivot_wider)
