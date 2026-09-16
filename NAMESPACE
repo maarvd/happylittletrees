@@ -13,8 +13,6 @@ export(loadwaterkwaliteit)
 export(search_proj)
 export(set_folderstructure)
 import(data.table)
-import(ggplot2)
-import(ggtern)
 importFrom(data.table,
   as.data.table,
   setnames
@@ -25,7 +23,6 @@ importFrom(httr,
   write_disk
 )
 importFrom(janitor,remove_empty)
-importFrom(plyr,ddply)
 importFrom(readxl,read_xlsx)
 importFrom(sf,
   st_as_sf,

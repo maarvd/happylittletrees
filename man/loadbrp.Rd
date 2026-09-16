@@ -11,7 +11,7 @@ loadbrp(sf, expand, year)
 
 \item{expand}{Extension in meters. Defaults to 100 meters.}
 
-\item{year}{2009 - 2024 supported. Defaults to 2019.}
+\item{year}{2009 - 2026 supported. Defaults to 2019.}
 }
 \description{
 Retrieve brp gewaspercelen for aoi using the bbox of an sf object
